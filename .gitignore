@@ -1,0 +1,22 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+env/
+
+# MLflow artifacts
+mlruns/
+*.db
+
+# Model outputs
+models/
+*.pkl
+
+# Data files (keep repo clean, only synthetic or sample data)
+data/*.csv
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,39 @@
+name: Retrain and Deploy
+
+on:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'app/**'
+      - 'data/**'
+      - 'requirements.txt'
+      - 'Dockerfile'
+      - '.github/workflows/train.yml'
+  workflow_dispatch:
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Retrain model
+        run: |
+          python scripts/train.py
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: latest-model
+          path: models/latest/
